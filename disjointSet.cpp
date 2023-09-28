@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-// Define a structure for a node in the BST
+
 struct TreeNode
 {
     int data;
@@ -8,38 +8,55 @@ struct TreeNode
     TreeNode *right;
     int rank;
 
-    TreeNode(int val) : data(val), left(nullptr), right(nullptr) {}
+    TreeNode(int val) : data(val), left(nullptr), right(nullptr), rank(0) {}
 };
 
-// Function to insert a value into a BST
 TreeNode *insert(TreeNode *root, int val)
 {
     if (root == nullptr)
     {
         return new TreeNode(val);
     }
-    root->right = insert(root->right, val);
+
+    if (val < root->data)
+    {
+        root->left = insert(root->left, val);
+    }
+    else if (val > root->data)
+    {
+        root->right = insert(root->right, val);
+    }
+
     return root;
 }
 
-// Function to find the root of a set with path compression
-TreeNode *findRoot(TreeNode *root)
+TreeNode *findRoot(TreeNode *node)
 {
-    if (root == nullptr)
+    if (node == nullptr)
     {
         return nullptr;
     }
 
-    if (root->left)
+    TreeNode *parent = nullptr;
+    TreeNode *current = node;
+
+    while (current != nullptr)
     {
-        root->left = findRoot(root->left);
-        return root->left;
+        parent = current;
+        current = current->left;
     }
 
-    return root;
+    current = node;
+    while (current != nullptr)
+    {
+        TreeNode *next = current->left;
+        current->left = parent;
+        current = next;
+    }
+
+    return parent;
 }
 
-// Function to perform Union by Rank
 TreeNode *unionSets(TreeNode *set1, TreeNode *set2)
 {
     if (set1 == nullptr || set2 == nullptr)
@@ -52,10 +69,9 @@ TreeNode *unionSets(TreeNode *set1, TreeNode *set2)
 
     if (root1 == root2)
     {
-        return root1; // Sets are already in the same union.
+        return root1;
     }
 
-    // Union by rank: Attach the shorter tree to the root of the taller tree.
     if (root1->rank < root2->rank)
     {
         root1->left = root2;
@@ -68,14 +84,12 @@ TreeNode *unionSets(TreeNode *set1, TreeNode *set2)
     }
     else
     {
-        // If ranks are equal, choose one as the new root and increment its rank.
-        root2->left = root1; // Attach root1 as a child of root2
-        root2->rank++;       // Increment rank of root2
+        root2->left = root1;
+        root2->rank++;
         return root2;
     }
 }
 
-// Function to print the elements of a BST (inorder traversal)
 void printSet(TreeNode *root)
 {
     if (root == nullptr)
@@ -87,6 +101,7 @@ void printSet(TreeNode *root)
     cout << root->data << " ";
     printSet(root->right);
 }
+
 int main()
 {
     TreeNode *set1 = nullptr;
@@ -114,7 +129,6 @@ int main()
         set2 = insert(set2, val);
     }
 
-    // Union operation
     cout << "Set 1: ";
     printSet(set1);
     cout << endl;
@@ -124,6 +138,7 @@ int main()
     cout << endl;
 
     TreeNode *unionResult = unionSets(set1, set2);
+
     cout << "Union of Set 1 and Set 2: ";
     printSet(unionResult);
     cout << endl;

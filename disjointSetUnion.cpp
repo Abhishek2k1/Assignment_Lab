@@ -6,9 +6,9 @@ struct TreeNode
     int data;
     TreeNode *left;
     TreeNode *right;
-    int rank;
+    int rank; // Rank for Union by Rank
 
-    TreeNode(int val) : data(val), left(nullptr), right(nullptr) {}
+    TreeNode(int val) : data(val), left(nullptr), right(nullptr), rank(0) {}
 };
 
 // Function to insert a value into a BST
@@ -18,25 +18,47 @@ TreeNode *insert(TreeNode *root, int val)
     {
         return new TreeNode(val);
     }
-    root->right = insert(root->right, val);
+
+    if (val < root->data)
+    {
+        root->left = insert(root->left, val);
+    }
+    else if (val > root->data)
+    {
+        root->right = insert(root->right, val);
+    }
+
     return root;
 }
 
 // Function to find the root of a set with path compression
-TreeNode *findRoot(TreeNode *root)
+TreeNode *findRoot(TreeNode *node)
 {
-    if (root == nullptr)
+    if (node == nullptr)
     {
         return nullptr;
     }
 
-    if (root->left)
+    TreeNode *parent = nullptr;
+    TreeNode *current = node;
+
+    // Find the root of the set by traversing up the tree
+    while (current != nullptr)
     {
-        root->left = findRoot(root->left);
-        return root->left;
+        parent = current;
+        current = current->left;
     }
 
-    return root;
+    // Perform path compression by updating the left child of each visited node
+    current = node;
+    while (current != nullptr)
+    {
+        TreeNode *next = current->left;
+        current->left = parent;
+        current = next;
+    }
+
+    return parent;
 }
 
 // Function to perform Union by Rank
@@ -58,19 +80,19 @@ TreeNode *unionSets(TreeNode *set1, TreeNode *set2)
     // Union by rank: Attach the shorter tree to the root of the taller tree.
     if (root1->rank < root2->rank)
     {
-        root1->left = root2;
+        root1->left = unionSets(root1->left, root2);
         return root1;
     }
     else if (root1->rank > root2->rank)
     {
-        root2->left = root1;
+        root2->left = unionSets(root2->left, root1);
         return root2;
     }
     else
     {
         // If ranks are equal, choose one as the new root and increment its rank.
-        root2->left = root1; // Attach root1 as a child of root2
-        root2->rank++;       // Increment rank of root2
+        root2->left = unionSets(root2->left, root1);
+        root2->rank++;
         return root2;
     }
 }
@@ -87,6 +109,7 @@ void printSet(TreeNode *root)
     cout << root->data << " ";
     printSet(root->right);
 }
+
 int main()
 {
     TreeNode *set1 = nullptr;
@@ -114,7 +137,6 @@ int main()
         set2 = insert(set2, val);
     }
 
-    // Union operation
     cout << "Set 1: ";
     printSet(set1);
     cout << endl;
@@ -123,10 +145,15 @@ int main()
     printSet(set2);
     cout << endl;
 
+    // Union operation
     TreeNode *unionResult = unionSets(set1, set2);
+
     cout << "Union of Set 1 and Set 2: ";
     printSet(unionResult);
     cout << endl;
+
+    // Free the memory (you should implement a proper destructor for production use)
+    // You can do this using a post-order traversal and delete each node.
 
     return 0;
 }
