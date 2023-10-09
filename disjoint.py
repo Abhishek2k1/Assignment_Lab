@@ -32,4 +32,3 @@ for u,v in adj:
     union(u,v)
 print(parent)
 print(rank)
-print(union)
