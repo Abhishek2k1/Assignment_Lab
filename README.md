@@ -1,6 +1,18 @@
-# Assignment_Lab
-MTCT assignment lab for semister 
+<div style="text-align:center">
 
+# MTCT Assignments Semester One
+</div>
+This project is for programming given in assignment lab semester 1 on MTCT of JU
+
+Author & Owner: Abhishek Paul
+
+
+<div style="text-align:center">
+
+## SEMESTER ASSIGNMENT
+</div>
+
+**Assignment Homework-**
 1. For a given matrix, Mat[N x N], write a program to find
 a) the rank of the given matrix
 b) the highest eigen value of the matrix 
@@ -27,3 +39,16 @@ b) https://www.math.uwaterloo.ca/tsp/data/index.html
 10. Take two arbitrary matrices positive integers, say, 128x128. Multiply both of them by implementing both of them as row-major matrices.
 
 11. Write a program implementing the Knuth-Morris-Pratt pattern matching algorithm.
+
+<div style="text-align:center">
+
+## CLASS ASSIGNMENT
+</div>
+
+**Assignment 1 - 2023-09-01 -** Design a system using the tree data-structure to implement a set. Also design two functions for union and intersection of two sets.
+
+**Assignment 2 - 2023-09-22 -** Design an algorithm and then write a program to find the nearest and farthest points for a given N number of 2D points.
+
+# Assignment_Lab
+MTCT assignment lab for semister 
+
