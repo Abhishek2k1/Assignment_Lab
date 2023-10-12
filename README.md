@@ -28,7 +28,9 @@ Note: A matrix Matl is a subset of another matrix Mat2 if the elements of Mat1 e
 a) https://people.sc.fsu.edu/~jburkardt/datasets/tsp/tsp.html 
 b) https://www.math.uwaterloo.ca/tsp/data/index.html
 
-5. From the dataset of Assignment 4, find the minimum spanning tree of the given graph. 6. The diameter of a tree is the maximum length of a path between two nodes. Given a undirected graph, find the diameter of the graph.
+5. From the dataset of Assignment 4, find the minimum spanning tree of the given graph.
+
+6. The diameter of a tree is the maximum length of a path between two nodes. Given a undirected graph, find the diameter of the graph.
 
 7. Write a program to solve the "Rat-in-a-Maze" problem for various dimensions of the maze. How do you propose to present the output for a large maze?
 
