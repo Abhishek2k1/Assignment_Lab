@@ -21,7 +21,7 @@ d) the transpose of the matrix
 
 2. For a given matrix Mat[N x N], decompose it into two matrices MatL[N x N] and MatU[N x N], where MatL and MatU are lower and upper triangular matrices, such that Mat=MatL*MatU. Note: Lower triangular matrices are matrices, where the upper triangular elements above the diagonal of the matrix are 0.
 
-3. For two given matrices Mat1[N x NJ and Mat2[M x M], where M<<N , find if Mat2 is a subset of Mat1. 
+3. For two given matrices Mat1[N x N] and Mat2[M x M], where M<<N , find if Mat2 is a subset of Mat1. 
 Note: A matrix Matl is a subset of another matrix Mat2 if the elements of Mat1 exists in Mat2 
 
 4. Design an algorithm to solve the Travelling Salesman problem. Take the datasets from
